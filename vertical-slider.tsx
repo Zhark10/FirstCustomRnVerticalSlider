@@ -5,7 +5,7 @@ import {
   StyleSheet,
 } from 'react-native'
 
-import Animated, { Easing } from 'react-native-reanimated'
+import Animated from 'react-native-reanimated'
 
 type Props = {
   value: number
@@ -27,7 +27,6 @@ export const VerticalSlider: React.FC<Props> = (props) => {
   let _moveStartValue: any = null
 
   const [value, setValue] = React.useState(props.value)
-  const [sliderHeight] = React.useState(new Animated.Value(0))
 
   const panResponderInitial = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -88,12 +87,6 @@ export const VerticalSlider: React.FC<Props> = (props) => {
   }
 
   const _changeState = (value: number): void => {
-    const { animationDuration } = props
-    Animated.timing(sliderHeight, {
-      toValue: sliderHeight,
-      easing: Easing.inOut(Easing.ease),
-      duration: animationDuration || 0,
-    }).start()
     setValue(value)
   }
 
@@ -126,7 +119,7 @@ export const VerticalSlider: React.FC<Props> = (props) => {
           style={[
             styles.slider,
             {
-              height: sliderHeight,
+              height: (value * height) / props.max,
               width,
               backgroundColor: minimumTrackTintColor,
             },
@@ -134,14 +127,27 @@ export const VerticalSlider: React.FC<Props> = (props) => {
         />
         <Animated.View
           style={{
-            bottom: value,
+            bottom: (value * height) / props.max,
             height: 26,
             width: 26,
             borderRadius: 13,
             borderWidth: 10,
-            backgroundColor: '#fff',
-            borderColor: '#AB9E98',
+            backgroundColor: 'green',
+            borderColor: 'blue',
             position: 'absolute',
+          }}
+        />
+        <View
+          style={{
+            backgroundColor: 'transparent',
+            borderStyle: 'solid',
+            borderLeftWidth: 5,
+            borderRightWidth: 5,
+            borderBottomWidth: 70,
+            borderLeftColor: 'transparent',
+            borderRightColor: 'transparent',
+            borderBottomColor: 'yellow',
+            zIndex: -1,
           }}
         />
       </View>
@@ -159,7 +165,8 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   container: {
-    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   slider: {
     position: 'absolute',
