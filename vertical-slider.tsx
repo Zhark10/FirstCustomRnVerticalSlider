@@ -5,11 +5,11 @@ import React from 'react'
 import {
   View,
   Text,
-  Animated,
   PanResponder,
   StyleSheet,
-  Easing,
 } from 'react-native'
+
+import Animated, { Easing } from 'react-native-reanimated'
 
 type Props = {
   value: number
@@ -115,18 +115,16 @@ export const VerticalSlider: React.FC<Props> = (props) => {
     } else {
       ballPosition -= _ballHeight / 2
     }
-    Animated.parallel([
-      Animated.timing(sliderHeight, {
-        toValue: sliderHeight,
-        easing: Easing.linear,
-        duration: animationDuration || 0,
-      }),
-      Animated.timing(ballHeight, {
-        toValue: ballPosition,
-        easing: Easing.linear,
-        duration: animationDuration || 0,
-      }),
-    ]).start()
+    Animated.timing(sliderHeight, {
+      toValue: sliderHeight,
+      easing: Easing.linear,
+      duration: animationDuration || 0,
+    }).start()
+    Animated.timing(ballHeight, {
+      toValue: ballPosition,
+      easing: Easing.linear,
+      duration: animationDuration || 0,
+    }).start()
     setValue(value)
   }
 
@@ -142,7 +140,6 @@ export const VerticalSlider: React.FC<Props> = (props) => {
     borderRadius,
     maximumTrackTintColor,
     minimumTrackTintColor,
-    showBallIndicator,
     ballIndicatorColor,
     ballIndicatorWidth,
     ballIndicatorPosition,
