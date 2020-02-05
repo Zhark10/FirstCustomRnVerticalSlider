@@ -17,8 +17,8 @@ type Props = {
   width: number
   height: number
   borderRadius: number
-  maximumTrackTintColor: string
-  minimumTrackTintColor: string
+  maximumTrackTintColor?: string
+  minimumTrackTintColor?: string
   step?: number
   animationDuration?: number
 }
@@ -131,6 +131,18 @@ export const VerticalSlider: React.FC<Props> = (props) => {
               backgroundColor: minimumTrackTintColor,
             },
           ]}
+        />
+        <Animated.View
+          style={{
+            bottom: value,
+            height: 26,
+            width: 26,
+            borderRadius: 13,
+            borderWidth: 10,
+            backgroundColor: '#fff',
+            borderColor: '#AB9E98',
+            position: 'absolute',
+          }}
         />
       </View>
     </View>
