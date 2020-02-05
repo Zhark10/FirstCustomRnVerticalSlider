@@ -32,21 +32,12 @@ type Props = {
   animationDuration?: number
 }
 
-type State = {
-  value: number
-  preValue: number
-  sliderHeight: any
-  ballHeight: any
-  panResponder: any
-}
-
 export const VerticalSlider: React.FC<Props> = (props) => {
   let _moveStartValue: any = null
 
   const [value, setValue] = React.useState(props.value)
-  const [preValue, setPreValue] = React.useState(props.value)
-  const [sliderHeight, setSliderHeight] = React.useState(new Animated.Value(0))
-  const [ballHeight, setBallHeight] = React.useState(new Animated.Value(0))
+  const [sliderHeight] = React.useState(new Animated.Value(0))
+  const [ballHeight] = React.useState(new Animated.Value(0))
 
   const panResponderInitial = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -87,7 +78,7 @@ export const VerticalSlider: React.FC<Props> = (props) => {
     },
   })
 
-  const [panResponder, setPanResponder] = React.useState(panResponderInitial)
+  const [panResponder] = React.useState(panResponderInitial)
 
 
   const _fetchNewValueFromGesture = (gestureState: any): number => {
