@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   View,
-  Text,
   PanResponder,
   StyleSheet,
 } from 'react-native'
@@ -20,7 +19,6 @@ type Props = {
   borderRadius: number
   maximumTrackTintColor: string
   minimumTrackTintColor: string
-  showBallIndicator: boolean
   step?: number
   animationDuration?: number
 }
@@ -30,7 +28,6 @@ export const VerticalSlider: React.FC<Props> = (props) => {
 
   const [value, setValue] = React.useState(props.value)
   const [sliderHeight] = React.useState(new Animated.Value(0))
-  const [ballHeight] = React.useState(new Animated.Value(0))
 
   const panResponderInitial = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -73,7 +70,6 @@ export const VerticalSlider: React.FC<Props> = (props) => {
 
   const [panResponder] = React.useState(panResponderInitial)
 
-
   const _fetchNewValueFromGesture = (gestureState: any): number => {
     const { min, max, step, height } = props
     const ratio = -gestureState.dy / height
@@ -91,25 +87,18 @@ export const VerticalSlider: React.FC<Props> = (props) => {
     return Math.floor(value * 100) / 100
   }
 
-  const _getSliderHeight = (value: number): number => {
-    const { min, max, height } = props
-    return ((value - min) * height) / (max - min)
-  }
-
   const _changeState = (value: number): void => {
     const { animationDuration } = props
     Animated.timing(sliderHeight, {
       toValue: sliderHeight,
-      easing: Easing.linear,
+      easing: Easing.inOut(Easing.ease),
       duration: animationDuration || 0,
     }).start()
     setValue(value)
   }
 
   React.useEffect(() => {
-    if (props.value) {
-      _changeState(value)
-    }
+    _changeState(value)
   }, [])
 
   const {
@@ -124,12 +113,11 @@ export const VerticalSlider: React.FC<Props> = (props) => {
       <View
         style={[
           styles.container,
-          styles.shadow,
           {
             height,
             width,
             borderRadius,
-            backgroundColor: maximumTrackTintColor || '#ECECEC',
+            backgroundColor: maximumTrackTintColor,
           },
         ]}
         {...panResponder.panHandlers}
@@ -150,16 +138,6 @@ export const VerticalSlider: React.FC<Props> = (props) => {
 }
 
 const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
-  },
   ball: {
     position: 'absolute',
     alignItems: 'center',
