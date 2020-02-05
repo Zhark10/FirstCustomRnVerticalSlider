@@ -1,6 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable react/destructuring-assignment */
 import React from 'react'
 import {
   View,
@@ -149,9 +146,7 @@ export const VerticalSlider: React.FC<Props> = (props) => {
     <View style={[{ height, width, borderRadius }]}>
       <View
         style={[
-          // eslint-disable-next-line @typescript-eslint/no-use-before-define
           styles.container,
-          // eslint-disable-next-line @typescript-eslint/no-use-before-define
           styles.shadow,
           {
             height,
@@ -160,12 +155,10 @@ export const VerticalSlider: React.FC<Props> = (props) => {
             backgroundColor: maximumTrackTintColor || '#ECECEC',
           },
         ]}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...panResponder.panHandlers}
       >
         <Animated.View
           style={[
-            // eslint-disable-next-line @typescript-eslint/no-use-before-define
             styles.slider,
             {
               height: sliderHeight,
