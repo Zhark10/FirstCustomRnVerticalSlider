@@ -22,10 +22,6 @@ type Props = {
   minimumTrackTintColor: string
   showBallIndicator: boolean
   step?: number
-  ballIndicatorColor?: string
-  ballIndicatorWidth?: number
-  ballIndicatorPosition?: number
-  ballIndicatorTextColor?: string
   animationDuration?: number
 }
 
@@ -101,24 +97,9 @@ export const VerticalSlider: React.FC<Props> = (props) => {
   }
 
   const _changeState = (value: number): void => {
-    const { height, ballIndicatorWidth, animationDuration } = props
-    const _sliderHeight = _getSliderHeight(value)
-    let ballPosition = _sliderHeight
-    const _ballHeight = ballIndicatorWidth || 48
-    if (ballPosition + _ballHeight >= height) {
-      ballPosition = height - _ballHeight
-    } else if (ballPosition - _ballHeight <= 0) {
-      ballPosition = 0
-    } else {
-      ballPosition -= _ballHeight / 2
-    }
+    const { animationDuration } = props
     Animated.timing(sliderHeight, {
       toValue: sliderHeight,
-      easing: Easing.linear,
-      duration: animationDuration || 0,
-    }).start()
-    Animated.timing(ballHeight, {
-      toValue: ballPosition,
       easing: Easing.linear,
       duration: animationDuration || 0,
     }).start()
@@ -137,10 +118,6 @@ export const VerticalSlider: React.FC<Props> = (props) => {
     borderRadius,
     maximumTrackTintColor,
     minimumTrackTintColor,
-    ballIndicatorColor,
-    ballIndicatorWidth,
-    ballIndicatorPosition,
-    ballIndicatorTextColor,
   } = props
   return (
     <View style={[{ height, width, borderRadius }]}>
@@ -163,38 +140,11 @@ export const VerticalSlider: React.FC<Props> = (props) => {
             {
               height: sliderHeight,
               width,
-              backgroundColor: minimumTrackTintColor || '#ECECEC',
+              backgroundColor: minimumTrackTintColor,
             },
           ]}
         />
       </View>
-      {props.showBallIndicator ? (
-        <Animated.View
-          style={[
-            styles.ball,
-            styles.shadow,
-            {
-              width: ballIndicatorWidth || 48,
-              height: ballIndicatorWidth || 48,
-              borderRadius: ballIndicatorWidth ? ballIndicatorWidth / 2 : 24,
-              bottom: ballHeight,
-              left: ballIndicatorPosition || -60,
-              backgroundColor: ballIndicatorColor || '#ECECEC',
-            },
-          ]}
-        >
-          <Text
-            style={[
-              styles.ballText,
-              {
-                color: ballIndicatorTextColor || '#000000',
-              },
-            ]}
-          >
-            {Math.round(value * 100) / 100}
-          </Text>
-        </Animated.View>
-      ) : null}
     </View>
   )
 }
