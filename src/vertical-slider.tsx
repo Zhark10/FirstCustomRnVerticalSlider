@@ -2,47 +2,13 @@ import React from 'react'
 import {
   View,
   PanResponder,
-  StyleSheet,
 } from 'react-native'
 
 import Animated from 'react-native-reanimated'
+import { sliderStyles } from './vertical-slider.styles'
+import { SliderProps } from './vertical-slider.types'
 
-const styles = StyleSheet.create({
-  ball: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ballText: {
-    fontWeight: '900',
-  },
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  slider: {
-    position: 'absolute',
-    bottom: 0,
-  },
-})
-
-type Props = {
-  value: number
-  disabled: boolean
-  min: number
-  max: number
-  onChange: (value: number) => void
-  onComplete: (value: number) => void
-  width: number
-  height: number
-  borderRadius: number
-  maximumTrackTintColor?: string
-  minimumTrackTintColor?: string
-  step?: number
-  animationDuration?: number
-}
-
-export const VerticalSlider: React.FC<Props> = ({
+export const VerticalSlider: React.FC<SliderProps> = ({
   borderRadius,
   disabled,
   height,
@@ -125,7 +91,7 @@ export const VerticalSlider: React.FC<Props> = ({
     <View style={[{ height, width, borderRadius }]}>
       <View
         style={[
-          styles.container,
+          sliderStyles.container,
           {
             height,
             width,
@@ -137,7 +103,7 @@ export const VerticalSlider: React.FC<Props> = ({
       >
         <Animated.View
           style={[
-            styles.slider,
+            sliderStyles.slider,
             {
               height: (gestureOffset * height) / max,
               width,
