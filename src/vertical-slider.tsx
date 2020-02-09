@@ -26,11 +26,11 @@ export const VerticalSlider: React.FC<SliderProps> = ({
 
   const [gestureOffset, setValue] = React.useState(initialValue)
 
-  const _changeState = (currentState: number): void => {
+  const _changeState = React.useCallback((currentState: number): void => {
     setValue(currentState)
-  }
+  }, [gestureOffset, setValue])
 
-  const _fetchNewValueFromGesture = (gestureState: any): number => {
+  const _fetchNewValueFromGesture = React.useCallback((gestureState: any): number => {
     const ratio = -gestureState.dy / height
     const diff = max - min
     if (step) {
@@ -44,7 +44,7 @@ export const VerticalSlider: React.FC<SliderProps> = ({
     }
     const value = Math.max(min, _moveStartValue + ratio * diff)
     return Math.floor(value * 100) / 100
-  }
+  }, [height, max, min, step])
 
   const panResponderInitial = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
